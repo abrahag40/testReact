@@ -47,8 +47,8 @@ function Home() {
                   <td>{p.email}</td>
                   <td> {p.dateBirth} </td>
                   <td>
-                    <input onClick={() => setCount(p.address)} ref={iAddress.current[i]} type="text" defaultValue={p.address}/>
-                    <span > {p.address} </span>
+                    <input ref={iAddress.current[i]} type="text" style={{ display: "none" }} defaultValue={p.address}/>
+                    <span onClick={() => setCount(p.address)} style={{ color: "blue", cursor: "pointer" }} > {p.address} </span>
                   </td>
                 </tr>
               </>
@@ -56,9 +56,9 @@ function Home() {
           })}
         </tbody>
       </table>
-      <p>You clicked {count} times</p>
+      {address.address ? (`Dirección: ${address.address}`) : ('Esperando dirección... ')}
       {console.log(address)}
-      <Map google={this.props.google} zoom={14}>
+      {/* <Map google={this.props.google} zoom={14}>
         <Marker onClick={this.onMarkerClick} name={"Current location"} />
 
         <InfoWindow onClose={this.onInfoWindowClose}>
@@ -66,7 +66,7 @@ function Home() {
             <h1>{this.state.selectedPlace.name}</h1>
           </div>
         </InfoWindow>
-      </Map>
+      </Map> */}
     </div>
   );
 }
