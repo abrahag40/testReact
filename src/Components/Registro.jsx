@@ -6,11 +6,6 @@ import people from "../people.js";
 
 registerLocale("es", es);
 
-const mapStyles = {
-  width: "100%",
-  height: "100%",
-};
-
 function Registro() {
   var peopleJSON = localStorage.getItem("people");
   let newpeopleJSON = JSON.parse(peopleJSON);
@@ -52,7 +47,6 @@ function Registro() {
           dateBirth: fechaNacimiento
         },
       ];
-      console.log(newpeopleJSON);
       localStorage.setItem("name", name);
       localStorage.setItem("email", email);
       localStorage.setItem("fechaNacimiento", fechaNacimiento);

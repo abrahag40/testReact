@@ -35,7 +35,7 @@ function Home() {
           );
         })
         .catch((err) => {
-          return console.log(err);
+          return alert(err);
         });
     }
   };
@@ -86,13 +86,11 @@ function Home() {
               })}
             </tbody>
           </table>
-          {
-              console.log(JSON.stringify(center))
 
-          }
-          {console.log('---', center[0].lat)}
+          {/* Para probar latitud y longitud:
+          {`Latitud: ${center[0].lat} - Longitud ${center[0].lng}`} 
+          */}
 
-          {`Latitud: ${center[0].lat} - Longitud ${center[0].lng}`}
           <GoogleMapReact
               bootstrapURLKeys={{ key: 'AIzaSyC7fn14KqyerEmWYRAk9KAIcdn4y6jSS4M' }}
               defaultCenter={center[0]}
