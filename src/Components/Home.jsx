@@ -1,27 +1,41 @@
 import React, { Component, useState, useEffect, useRef } from "react";
 // import people from '../people.js'
 import axios from "axios";
+import GoogleMapReact from "google-map-react";
+
+const AnyReactComponent = ({text}: any) => <div>{text}</div>;
 
 function Home() {
   var peopleJSON = localStorage.getItem("people");
 
-  const URL_API = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC7fn14KqyerEmWYRAk9KAIcdn4y6jSS4M&address=";
+  const URL_API =
+    "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC7fn14KqyerEmWYRAk9KAIcdn4y6jSS4M&address=";
 
   let iAddress = useRef([React.createRef(), React.createRef()]);
   const [count, setCount] = useState("");
   const [address, setAddress] = useState([]);
+  const [center, setCenter] = useState([]);
+  const [lat, setLat] = useState([]);
 
   const handleAdd = (e) => {
     const addAdd = !e == "" ? `${URL_API + e.replace(/ /g, "")}` : null;
     if (addAdd != null) {
       axios
-        .get(addAdd)
+        .get(addAdd, {
+          params: {
+            headers: { 'Content-Type': 'application/json' },
+            mode: 'no-cors',
+          }
+        })
         .then((res) => {
-          res.data.results.map((map, index) => {
-            const lat = map.geometry.location.lat;
-            const long = map.geometry.location.lng;
-            console.log(lat);
-          });
+          setCenter(
+            res.data.results.map((coordenadas, index) => {
+              return {
+                lat: coordenadas.geometry.location.lat,
+                long: coordenadas.geometry.location.lng,
+              };
+            })
+          );
         })
         .catch((err) => {
           return console.log(err, address);
@@ -77,14 +91,21 @@ function Home() {
             </tbody>
           </table>
           {address ? `Dirección: ${address}` : "Esperando dirección... "}
-          <br />
-          <br />
-          {`${count}`}
         </div>
       </div>
-      <div id="map"></div>
+      <GoogleMapReact
+          bootstrapURLKeys={{ key: 'AIzaSyC7fn14KqyerEmWYRAk9KAIcdn4y6jSS4M' }}
+          defaultCenter={center}
+          defaultZoom={13}
+        >
+          <AnyReactComponent
+            lat={11.0168}
+            lng={76.9558}
+            text="My Marker"
+          />
+        </GoogleMapReact>
     </div>
   );
 }
 
-export default Home
+export default Home;
