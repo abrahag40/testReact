@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { Map, GoogleApiWrapper } from "google-maps-react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
@@ -140,8 +139,7 @@ function Registro() {
       <div className="row">
         <div className="col-12 d-flex pt-5 justify-content-center">
           <button type="submit" className="btn btn-primary" onClick={sendData}>
-            {" "}
-            Enviar{" "}
+            Enviar
           </button>
         </div>
       </div>
