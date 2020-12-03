@@ -13,7 +13,7 @@ const mapStyles = {
 
 function Registro() {
   var peopleJSON = localStorage.getItem("people");
-  const newpeopleJSON = JSON.parse(peopleJSON);
+  let newpeopleJSON = JSON.parse(peopleJSON);
 
   var dateFormat = require("dateformat");
 
@@ -22,7 +22,6 @@ function Registro() {
   const iFechaNacimiento = useRef(null);
   const iDireccion = useRef(null);
 
-  const [value, setValue] = useState("");
   const [startDate, setStartDate] = useState(new Date());
 
   const sendData = () => {
@@ -43,7 +42,7 @@ function Registro() {
     } else if (direccion === "") {
       alert("Favor de llenar dirección");
     } else {
-      const newPeople = [
+        newpeopleJSON = [
         ...newpeopleJSON,
         {
           id: 10,
@@ -53,14 +52,13 @@ function Registro() {
           dateBirth: fechaNacimiento
         },
       ];
-
+      console.log(newpeopleJSON);
       localStorage.setItem("name", name);
       localStorage.setItem("email", email);
       localStorage.setItem("fechaNacimiento", fechaNacimiento);
       localStorage.setItem("direccion", direccion);
-
       localStorage.removeItem("people");
-      localStorage.setItem("people", JSON.stringify(newPeople));
+      localStorage.setItem("people", JSON.stringify(newpeopleJSON));
       alert("Usuario agregado");
     }
   };
