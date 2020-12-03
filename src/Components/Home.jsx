@@ -12,10 +12,7 @@ function Home() {
     "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC7fn14KqyerEmWYRAk9KAIcdn4y6jSS4M&address=";
 
   let iAddress = useRef([React.createRef(), React.createRef()]);
-  const [count, setCount] = useState("");
-  const [address, setAddress] = useState([]);
-  const [center, setCenter] = useState([]);
-  const [lat, setLat] = useState([]);
+  const [center, setCenter] = useState([{lat: 19.3681455, lng: -99.15299879999999 }]);
 
   const handleAdd = (e) => {
     const addAdd = !e == "" ? `${URL_API + e.replace(/ /g, "")}` : null;
@@ -32,13 +29,13 @@ function Home() {
             res.data.results.map((coordenadas, index) => {
               return {
                 lat: coordenadas.geometry.location.lat,
-                long: coordenadas.geometry.location.lng,
+                lng: coordenadas.geometry.location.lng,
               };
             })
           );
         })
         .catch((err) => {
-          return console.log(err, address);
+          return console.log(err);
         });
     }
   };
@@ -76,7 +73,6 @@ function Home() {
                         />
                         <span
                           onClick={() => {
-                            setCount(p.address);
                             handleAdd(p.address);
                           }}
                           style={{ color: "blue", cursor: "pointer" }}
@@ -90,20 +86,26 @@ function Home() {
               })}
             </tbody>
           </table>
-          {address ? `Dirección: ${address}` : "Esperando dirección... "}
+          {
+              console.log(JSON.stringify(center))
+
+          }
+          {console.log('---', center[0].lat)}
+
+          {`Latitud: ${center[0].lat} - Longitud ${center[0].lng}`}
+          <GoogleMapReact
+              bootstrapURLKeys={{ key: 'AIzaSyC7fn14KqyerEmWYRAk9KAIcdn4y6jSS4M' }}
+              defaultCenter={center[0]}
+              defaultZoom={13}
+            >
+              <AnyReactComponent
+                lat={center[0].lat}
+                lng={center[0].lng}
+                text="My Marker"
+              />
+            </GoogleMapReact>
         </div>
       </div>
-      <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyC7fn14KqyerEmWYRAk9KAIcdn4y6jSS4M' }}
-          defaultCenter={center}
-          defaultZoom={13}
-        >
-          <AnyReactComponent
-            lat={11.0168}
-            lng={76.9558}
-            text="My Marker"
-          />
-        </GoogleMapReact>
     </div>
   );
 }
